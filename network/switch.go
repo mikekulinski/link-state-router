@@ -63,14 +63,14 @@ func (s *Switch) dijkstra(dest *Switch) ([]*Switch, error) {
 
 			prevMinDist, err := minDistances.Lookup(neighbor)
 			if err != nil {
-				return []*Switch{}, fmt.Errorf("error looking up node in minDistances: %v", err)
+				return []*Switch{}, fmt.Errorf("error looking up node in minDistances: %w", err)
 			}
 
 			// Relax edge if we have a better value than we have previously calculated
-			if prevMinDist == math.MaxInt64 || currentDist + dist < prevMinDist {
-				err := minDistances.Update(neighbor, currentDist + dist)
+			if prevMinDist == math.MaxInt64 || currentDist+dist < prevMinDist {
+				err := minDistances.Update(neighbor, currentDist+dist)
 				if err != nil {
-					return []*Switch{}, fmt.Errorf("error updating relaxing edge: %v", err)
+					return []*Switch{}, fmt.Errorf("error updating relaxing edge: %w", err)
 				}
 				s.routingTable[neighbor] = append(currentPath, neighbor)
 			}
@@ -78,7 +78,7 @@ func (s *Switch) dijkstra(dest *Switch) ([]*Switch, error) {
 
 		link, err := minDistances.Extract()
 		if err != nil {
-			return []*Switch{}, fmt.Errorf("error extracting the next minimum node: %v", err)
+			return []*Switch{}, fmt.Errorf("error extracting the next minimum node: %w", err)
 		}
 
 		// Mark the node as visited and update its final distance
@@ -89,7 +89,7 @@ func (s *Switch) dijkstra(dest *Switch) ([]*Switch, error) {
 
 	shortestPath, ok := s.routingTable[dest]
 	if !ok {
-		fmt.Errorf("error getting the shortest path for the destination")
+		return []*Switch{}, fmt.Errorf("error getting the shortest path for the destination")
 	}
 
 	return shortestPath, nil

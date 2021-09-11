@@ -1,7 +1,6 @@
 package network
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -19,7 +18,7 @@ func NewMinHeap() *MinHeap {
 
 func (h *MinHeap) Extract() (Link, error) {
 	if len(h.arr) == 0 {
-		return Link{}, errors.New("tried to extract from an empty heap")
+		return Link{}, fmt.Errorf("tried to extract from an empty heap")
 	}
 
 	min := h.arr[0]
@@ -101,7 +100,7 @@ func (h *MinHeap) Update(node *Switch, dist int) error {
 
 	index, ok := h.indices[newLink.Dest]
 	if !ok {
-		return errors.New("tried to update an item that doesn't exist")
+		return fmt.Errorf("tried to update an item that doesn't exist")
 	}
 
 	currentLink := h.arr[index]
