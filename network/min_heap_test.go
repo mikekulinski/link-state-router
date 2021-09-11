@@ -4,6 +4,8 @@ import (
 	"math/rand"
 	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMinHeap_Insert(t *testing.T) {
@@ -34,7 +36,7 @@ func TestMinHeap_Extract(t *testing.T) {
 			t.Errorf("error extracting min: %v", err)
 		}
 		verify(t, h, 0)
-		assertEquals(t, expected, min.Distance)
+		assert.Equal(t, expected, min.Distance)
 	}
 }
 
@@ -65,7 +67,7 @@ func verify(t *testing.T, h *MinHeap, currentIndex int) {
 	}
 	currentValue := h.arr[currentIndex].Distance
 
-	leftIndex := currentIndex * 2 + 1
+	leftIndex := currentIndex*2 + 1
 	if leftIndex < len(h.arr) {
 		leftValue := h.arr[leftIndex].Distance
 		if leftValue < currentValue {
@@ -76,7 +78,7 @@ func verify(t *testing.T, h *MinHeap, currentIndex int) {
 		verify(t, h, leftIndex)
 	}
 
-	rightIndex := currentIndex * 2 + 2
+	rightIndex := currentIndex*2 + 2
 	if rightIndex < len(h.arr) {
 		rightValue := h.arr[rightIndex].Distance
 		if rightValue < currentValue {
@@ -87,10 +89,4 @@ func verify(t *testing.T, h *MinHeap, currentIndex int) {
 		verify(t, h, rightIndex)
 	}
 
-}
-
-func assertEquals(t *testing.T, expected int, actual int) {
-	if expected != actual {
-		t.Errorf("Expected: %v, Actual: %v", expected, actual)
-	}
 }
