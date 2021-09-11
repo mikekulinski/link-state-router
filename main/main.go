@@ -1,8 +1,9 @@
 package main
 
 import (
-	. "../network"
 	"fmt"
+
+	. "github.com/mikekulinski/link-state-router/network"
 )
 
 func main() {
