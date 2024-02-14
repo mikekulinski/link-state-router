@@ -1,0 +1,1 @@
+A basic implementation of a Link State router and network. I thought it would be a fun project that would force me to write my own implementations of a Min Heap, Dijkstras, a build a network on top of that.
